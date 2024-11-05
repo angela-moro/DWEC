@@ -1,3 +1,5 @@
+// import GastoCombustible from './gastoCombustible.js';
+
 // ------------------------------ 1. VARIABLES GLOBALES ------------------------------
 let tarifasJSON = null;
 let gastosJSON = null;
@@ -82,8 +84,6 @@ function guardarGasto(event) {
     const tipoVehiculo = document.getElementById('vehicle-type').value;
     const fecha = new Date(document.getElementById('date').value);
     const kilometros = parseFloat(document.getElementById('kilometers').value);
-
-    ///////////////////////////////////////////// Apartado 3
     const anio = fecha.getFullYear();
 
     // Validaciones
@@ -126,6 +126,15 @@ function guardarGasto(event) {
     // Actualizar la visualización y recalcular el total
     actualizarListaGastos(nuevoGasto);
     calcularGastoTotal();
+    vaciarFormulario();
+
+}
+
+// Función para vaciar el formulario
+function vaciarFormulario() {
+    document.getElementById('vehicle-type').value = ''; // Vaciar el tipo de vehículo
+    document.getElementById('date').value = ''; // Vaciar la fecha
+    document.getElementById('kilometers').value = ''; // Vaciar los kilómetros
 }
 
 // Actualizar la lista de gastos en el DOM
@@ -134,4 +143,15 @@ function actualizarListaGastos(gasto) {
     const listItem = document.createElement('li');
     listItem.textContent = `${new Date(gasto.date).toLocaleDateString()}: ${gasto.vehicleType} - ${gasto.kilometers} km - ${gasto.precioViaje.toFixed(2)}€`;
     expenseList.appendChild(listItem);
+}
+
+// Mostrar el último gasto en "Gastos recientes"
+function mostrarUltimoGasto(gasto) {
+    const recentExpenses = document.getElementById('recent-expenses'); // Asegúrate de que este elemento existe en tu HTML
+    recentExpenses.innerHTML = ''; // Limpiar contenido previo
+
+    const jsonGasto = gasto.convertToJSON(); // Convertir a JSON usando el método del objeto
+    const listItem = document.createElement('li');
+    listItem.textContent = jsonGasto; // Mostrar JSON en el elemento
+    recentExpenses.appendChild(listItem);
 }
