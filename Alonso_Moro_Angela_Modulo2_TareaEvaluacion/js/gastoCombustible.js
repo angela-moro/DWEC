@@ -18,4 +18,5 @@ class GastoCombustible {
             precioViaje: this.precioViaje
         });
     }
+
 }
