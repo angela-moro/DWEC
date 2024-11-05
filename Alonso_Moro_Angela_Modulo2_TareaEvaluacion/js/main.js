@@ -1,5 +1,3 @@
-// import GastoCombustible from './gastoCombustible.js';
-
 // ------------------------------ 1. VARIABLES GLOBALES ------------------------------
 let tarifasJSON = null;
 let gastosJSON = null;
