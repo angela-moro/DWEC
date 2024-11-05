@@ -63,9 +63,9 @@ function calcularGastoTotal() {
     // Sumar gastos existentes
     gastosJSON.forEach(gasto => {
         const fecha = new Date(gasto.date);
-        const año = fecha.getFullYear();
-        if (aniosArray.hasOwnProperty(año)) {
-            aniosArray[año] += gasto.precioViaje;
+        const year = fecha.getFullYear();
+        if (aniosArray.hasOwnProperty(year)) {
+            aniosArray[year] += gasto.precioViaje;
         }
     });
     // Actualizar el HTML con los gastos totales
@@ -83,4 +83,3 @@ function guardarGasto(event) {
     const fecha = new Date(document.getElementById('date').value);
     const kilometros = parseFloat(document.getElementById('kilometers').value);
 }
-
