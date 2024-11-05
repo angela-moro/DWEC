@@ -82,4 +82,56 @@ function guardarGasto(event) {
     const tipoVehiculo = document.getElementById('vehicle-type').value;
     const fecha = new Date(document.getElementById('date').value);
     const kilometros = parseFloat(document.getElementById('kilometers').value);
+
+    ///////////////////////////////////////////// Apartado 3
+    const anio = fecha.getFullYear();
+
+    // Validaciones
+    if (isNaN(kilometros) || kilometros <= 0) {
+        console.error('Kilómetros inválidos');
+        return;
+    }
+    if (!tipoVehiculo || isNaN(anio)) {
+        console.error('Datos de vehículo o fecha no válidos');
+        return;
+    }
+
+    // Encontrar la tarifa correspondiente
+    const tarifaAnio = tarifasJSON.tarifas.find(tarifa => tarifa.anio === anio);
+    if (!tarifaAnio) {
+        console.error(`Tarifa no encontrada para el año ${anio}`);
+        return;
+    }
+
+    const tarifa = tarifaAnio.vehiculos[tipoVehiculo];
+    if (!tarifa) {
+        console.error(`Tarifa no encontrada para el tipo de vehículo ${tipoVehiculo} en el año ${anio}`);
+        return;
+    }
+
+    // Calcular el precio del viaje
+    const precioViaje = kilometros * tarifa;
+
+    // Crear el objeto GastoCombustible y añadirlo a la lista de gastos
+    const nuevoGasto = {
+        vehicleType: tipoVehiculo,
+        date: fecha.toISOString(),
+        kilometers: kilometros,
+        precioViaje: precioViaje
+    };
+
+    // Agregar el nuevo gasto al array de gastos
+    gastosJSON.push(nuevoGasto);
+
+    // Actualizar la visualización y recalcular el total
+    actualizarListaGastos(nuevoGasto);
+    calcularGastoTotal();
+}
+
+// Actualizar la lista de gastos en el DOM
+function actualizarListaGastos(gasto) {
+    const expenseList = document.getElementById('expense-list');
+    const listItem = document.createElement('li');
+    listItem.textContent = `${new Date(gasto.date).toLocaleDateString()}: ${gasto.vehicleType} - ${gasto.kilometers} km - ${gasto.precioViaje.toFixed(2)}€`;
+    expenseList.appendChild(listItem);
 }
