@@ -13,7 +13,7 @@ const rl = readline.createInterface({
 // function elegirModo(){
 //     console.log('Acciones disponibles \n a - Añadir porductos \n d - Eliminar el último producto de la lista \n s - salir');
 //     rl.question('Introduce  la acción: ', (acc) => {
-        
+
 //         switch (acc.toUpperCase()){
 //             case 'A':
 //                 addProd();
@@ -35,7 +35,7 @@ const rl = readline.createInterface({
 
 // function addProd(){
 //     rl.question('Introduce  un producto o pulsa s: ', (producto) => {
-    
+
 //         if(producto === 's'){
 //             console.log(listado);
 //             elegirModo();
@@ -79,7 +79,7 @@ const rl = readline.createInterface({
 // function elegirModo(){
 //     console.log('Acciones disponibles \n c - Crear usuario \n i - Mostrar usuario \n s - salir');
 //     rl.question('Introduce  la acción: ', (acc) => {
-        
+
 //         switch (acc.toUpperCase()){
 //             case 'C':
 //                 addUser();
@@ -119,3 +119,39 @@ const rl = readline.createInterface({
 
 
 // Ejercicio 3: Procesamiento de Datos JSON y Bucle Avanzado (Avanzado)
+
+class Usuario {
+    constructor(nombre, edad, email) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.email = email;
+    }
+
+    mostrarInfo() {
+        console.log(`Nombre: ${this.nombre}`);
+        console.log(`Edad: ${this.edad}`);
+        console.log(`Email: ${this.email}`);
+    }
+}
+
+function introducirUsuarios(){
+    rl.question('Introduce el JSON con los usuarios: ', (json) => {
+        const usuariosJSON = JSON.parse(json);
+
+        const usuarios = usuariosJSON.map(u => new Usuario(u.nombre, u.edad, u.email))
+
+        rl.question('Introduce un nombre: ', (nombre) => {
+            const usuario = usuarios.find(usuario => usuario.nombre.toUpperCase() === nombre.toUpperCase());
+
+            if (usuario){
+                console.log(usuario)
+            } else{
+                console.log(`Usuario ${nombre} no encontrado`)
+            }
+            rl.close();
+        })
+
+    })
+}
+
+introducirUsuarios();
